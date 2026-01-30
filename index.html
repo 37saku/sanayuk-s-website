@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sanayuk's personal website</title>
-    <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1466608145789878487/1466608214463352956/snypfp.jpg?ex=697d5cd6&is=697c0b56&hm=30113d652f936aeccddda2fdd37223234dcddd538bf71654077550835d48447a&">
+    <link rel="icon" type="image/jpeg" href="snypfp.jpg">
     <style>
         :root {
             --bg-color: #f4f7f6;
@@ -32,6 +32,7 @@
             width: 100%;
             max-width: 400px;
             text-align: center;
+            box-sizing: border-box;
         }
 
         .profile-pic {
@@ -48,6 +49,12 @@
             font-size: 2rem;
             margin-bottom: 8px;
             font-weight: normal; /* Classic serif looks great when not overly bold */
+        }
+
+        h2{
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: normal;
         }
 
         p {
@@ -67,11 +74,12 @@
             color: var(--text-color);
             padding: 14px;
             border-radius: 4px; /* Slightly sharper corners for a formal look */
-            text-decoration: underline; /* Standard serif convention */
+            text-decoration: none;
             font-size: 1.1rem;
             transition: all 0.2s ease;
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+            box-shadow: 1px 1px 0px rgba(0,0,0,0.05);
             border: 1px solid #ccc;
+            display: block;
         }
 
         .link-card:hover {
@@ -81,57 +89,119 @@
         }
 
         footer {
-            margin-top: 50px;
+             margin-top: 50px;
             font-size: 0.85rem;
             color: #777;
             line-height: 1.6;
             border-top: 1px solid #ddd;
             padding-top: 20px;
+            width: 100%; /* Ensures it spans the container width */
+            text-align: center; /* Centers the text inside the footer */
         }
+
+        footer p {
+            margin: 5px 0; /* Tightens up the gap between the two footer lines */
+        }
+
+        .video-container {
+            width: 100%;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9; /* Standard widescreen format */
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+        .contact-link {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: underline;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            transition: opacity 0.2s;
+        }
+
+        .contact-link:hover {
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 480px) {
+        .container {
+        max-width: 90%; /* Gives some breathing room on the left/right */
+        }
+
+        .link-card {
+        padding: 12px 8px; /* Reduces side padding to keep it slim */
+        font-size: 1rem;    /* Slightly smaller font for better fit */
+        }
+    
+        .contact-line {
+        flex-direction: column; /* Optional: Stack email and IG if they still overlap */
+        gap: 5px;
+        }
+    
+        .separator {
+        display: none; /* Hide the | if stacking on phone */
+        }
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
-        <img src="
-        https://cdn.discordapp.com/attachments/1466608145789878487/1466608214463352956/snypfp.jpg?ex=697d5cd6&is=697c0b56&hm=30113d652f936aeccddda2fdd37223234dcddd538bf71654077550835d48447a&
-        " alt="Profile Picture" class="profile-pic">
+        <img src="snypfp.jpg" alt="Profile Picture" class="profile-pic">
         
-        <h1>@sanayuk</h1>
-        <p>whatever you do, at the crossroads, don't turn left</p>
-
+        <h1>sanayuk</h1>
+        <p>whatever you do, at the crossroads, don't turn left.</p>
+        <h3>YouTube</h3>
         <div class="links">
-            <a href="https://www.youtube.com/@sanayuk____" class="link-card" target="_blank">YouTube</a>
+            <a href="https://www.youtube.com/@sanayuk____" class="link-card" target="_blank">sanayuk | personal</a>
+            <a href="https://www.youtube.com/@loft2." class="link-card" target="_blank">loft2 | fancams</a>
+        </div>
+
+        <h3>Socials</h3>
+        <div class="links">
             <a href="https://www.instagram.com/sanayuk____/" class="link-card" target="_blank">Instagram</a>
             <a href="https://www.threads.com/sanayuk____/" class="link-card" target="_blank">Threads</a>
             <a href="https://x.com/sanayuk____" class="link-card" target="_blank">Twitter</a>
         </div>
 
-        <footer>
-            <p>Website created: 2023/09/15 18:40 (UTC +8)</p>
-            <p id="last-updated"></p>
-        </footer>
+        <h2>Latest Video</h2>
+
+    <div class="video-container">
+        <iframe 
+            src="https://www.youtube-nocookie.com/embed/hS_lLDnEj5Q" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+        </iframe>
+    </div>
+    
+        <h2 class="tight-header">Contact Me</h2>
+    <div class="contact-line">
+    <a href="mailto:sanayuuuk@gmail.com?subject=Contact from Website" class="contact-link">
+        sanayuuuk@gmail.com
+    </a>
+    <span class="separator">|</span>
+    <a href="https://www.instagram.com/sanayuk____/" class="contact-link" target="_blank">
+        @sanayuk____
+    </a>
     </div>
 
-    <script>
-        const now = new Date();
-    const lastUpdated = now.toLocaleString('en-GB', { 
-        year: 'numeric', 
-        month: '2-digit', 
-        day: '2-digit',
-        hour: '2-digit', 
-        minute: '2-digit',
-        hour12: false,
-        timeZone: 'Asia/Singapore' // This is UTC+8
-    }).replace(/,/g, ''); // Removes the comma between date and time
+</div>
 
-    // Reformatting from DD/MM/YYYY to YYYY/MM/DD
-    const [date, time] = lastUpdated.split(' ');
-    const [day, month, year] = date.split('/');
-    const formattedDate = `${year}/${month}/${day} ${time} (UTC +8)`;
-
-    document.getElementById('last-updated').innerText = "Last Updated: " + formattedDate;
-    </script>
+        <footer>
+            <p>Website created: 2023/09/15 18:40 (UTC +8)</p>
+            <p>Last Updated: 2026/01/30 21:00 (UTC +8)</p>
+            <p>© 2026 sanayuk. All rights reserved.</p>
+        </footer>
+    </div>
 
 </body>
 </html>
