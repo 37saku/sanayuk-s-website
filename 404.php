@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | sanayuk</title>
+    <link rel="icon" type="image/jpeg" href="snypfp.jpg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <img src="snypfp.jpg" alt="Lost" class="profile-pic" style="filter: grayscale(100%);">
+        
+        <h1 style="font-size: 4rem;">404</h1>
+        <h2>wrong page lol</h2>
+
+        <div style="margin-top: 40px;">
+            <a href="index.php" class="contact-link">Back to Home</a>
+        </div>
+
+        <footer>
+            <p>© 2026 sanayuk. All rights reserved.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

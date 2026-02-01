@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | sanayuk</title>
+    <link rel="icon" type="image/jpeg" href="snypfp.jpg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Small unique styles for just this page */
+        .bio-text {
+            text-align: justify;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+        .back-home {
+            margin-top: 30px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.php"><img src="snypfp.jpg" alt="Profile Picture" class="profile-pic"></a>
+        
+        <h1>About Me</h1>
+
+        <nav class="site-nav">
+        <a href="index.php" class="contact-link">Home</a> | 
+        <a href="about.php">About</a> | 
+        <a href="recents.php">Recents</a> | 
+        <a href="socials.php">Socials</a>
+    </nav>
+
+        <div class="bio-text">
+            <p>
+            Hi my name is Lo Yu Kiu, 16 years old, born and raised in Hong Kong, currently doing whatever I want to do lol.
+            </p>
+        </div>
+
+        <div style="margin-top: 40px;">
+            <a href="index.php" class="contact-link">Back to Home</a>
+        </div>
+
+        <footer>
+            <p>© 2026 sanayuk. All rights reserved.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

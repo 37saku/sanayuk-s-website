@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socials | sanayuk</title>
+    <link rel="icon" type="image/jpeg" href="snypfp.jpg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html">
+            <img src="snypfp.jpg" alt="Profile Picture" class="profile-pic">
+        </a>
+        
+        <h1>Socials</h1>
+        
+        <nav class="site-nav">
+        <a href="index.php" class="contact-link">Home</a> | 
+        <a href="about.php">About</a> | 
+        <a href="recents.php">Recents</a> | 
+        <a href="socials.php">Socials</a>
+    </nav>
+
+        <br>
+        <div class="links">
+            <a href="https://www.youtube.com/@sanayuk____" class="link-card" target="_blank">YouTube | sanayuk | personal</a>
+            <a href="https://www.youtube.com/@loft2." class="link-card" target="_blank">YouTube | loft2 | fancams</a>
+            <a href="https://www.instagram.com/sanayuk____/" class="link-card" target="_blank">Instagram</a>
+            <a href="https://open.spotify.com/user/31xqgkz4tjc3syadxhh52vzdo4kq?si=254b2dc9a4f743eb" class="link-card" target="_blank">Spotify</a>
+            <a href="https://www.threads.net/@sanayuk____" class="link-card" target="_blank">Threads</a>
+            <a href="https://x.com/sanayuk____" class="link-card" target="_blank">Twitter</a>
+            <a href="mailto:sanayuuuk@gmail.com?subject=Contact from Website" class="link-card" target="_blank">Email</a>
+        </div>
+
+        <div style="margin-top: 40px;">
+            <a href="index.php" class="contact-link">Back to Home</a>
+        </div>
+
+        <footer>
+            <p>© 2026 sanayuk. All rights reserved.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

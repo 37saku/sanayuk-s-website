@@ -1,0 +1,270 @@
+/* --- 1. Variables & Global Styles --- */
+:root {
+    --bg-color: #f4f7f6;
+    --text-color: #333;
+    --accent-color: #2d3436;
+    --link-bg: #ffffff;
+    --link-hover: #f0f0f0;
+}
+
+body {
+    font-family: "Times New Roman", Times, serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+/* --- 2. Layout Containers --- */
+.container {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* --- 3. Typography & Headers --- */
+h1, h2, h3 {
+    font-weight: normal;
+    margin: 0;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+h3 {
+    margin-top: 24px;
+    margin-bottom: 12px;
+}
+
+p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 24px;
+}
+
+/* --- 4. Navigation Menu --- */
+.site-nav {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 24px;
+    color: #333; /* Color of the | separators */
+}
+
+.site-nav a {
+    text-decoration: none !important;
+    color: #333 !important;
+    padding: 0 5px;
+    transition: opacity 0.2s;
+}
+
+.site-nav a:hover {
+    text-decoration: underline !important;
+    opacity: 0.6;
+}
+
+/* --- 5. The Name Hover Effect (sanayuk -> about me) --- */
+.name-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    position: relative;
+    margin-top: 10px;
+}
+
+.name-link h1 {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transition: none; /* Removed transition to prevent flickering */
+}
+
+.name-link h1::after {
+    content: attr(data-text);
+    position: absolute;
+    white-space: nowrap;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    font-style: normal;
+}
+
+.name-link:hover h1::after {
+    opacity: 1;
+}
+
+/* --- 6. Profile & Link Cards --- */
+.profile-pic {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-bottom: 16px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.link-card {
+    background-color: var(--link-bg);
+    color: var(--text-color);
+    padding: 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+    box-shadow: 1px 1px 0px rgba(0,0,0,0.05);
+    border: 1px solid #ccc;
+    display: block;
+}
+
+.link-card:hover {
+    background-color: var(--link-hover);
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+}
+
+/* --- 7. Media & Contact --- */
+.video-container {
+    width: 100%;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.video-container iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+.contact-line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-link {
+    display: inline-block;
+    color: var(--text-color);
+    text-decoration: underline;
+    font-size: 1.1rem;
+    transition: opacity 0.2s;
+}
+
+.contact-link:hover {
+    opacity: 0.7;
+}
+
+.tight-header {
+    margin-bottom: 5px;
+}
+
+/* --- 8. Footer --- */
+footer {
+    margin-top: 50px;
+    font-size: 0.85rem;
+    color: #777;
+    line-height: 1.6;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+/* --- 9. Mobile Adjustments --- */
+@media (max-width: 480px) {
+    .container {
+        max-width: 90%;
+    }
+
+    .link-card {
+        padding: 12px 8px;
+        font-size: 1rem;
+    }
+
+    .contact-line {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .separator {
+        display: none;
+    }
+}
+
+/* --- 10. Recents Feed Styles --- */
+
+.feed {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    text-align: left; /* Posts look better left-aligned */
+}
+
+.post-card {
+    background: var(--link-bg);
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 0px rgba(0,0,0,0.05);
+}
+
+.post-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+.post-title {
+    font-size: 1.3rem;
+    margin: 0 !important;
+    color: var(--text-color);
+}
+
+.post-date {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 4px;
+}
+
+.post-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+    color: #444;
+}
