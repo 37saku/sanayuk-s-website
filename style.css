@@ -14,10 +14,10 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+    min-height: 100vh; /* Takes full window height */
     margin: 0;
-    padding: 20px;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 /* --- 2. Layout Containers --- */
@@ -26,6 +26,10 @@ body {
     max-width: 400px;
     text-align: center;
     box-sizing: border-box;
+    /* Automatically pushes content directly to the vertical center between header and footer */
+    margin-top: auto;
+    margin-bottom: auto; 
+    padding: 20px 0;
 }
 
 /* --- 3. Typography & Headers --- */
@@ -51,70 +55,66 @@ h3 {
 
 p {
     font-size: 1.1rem;
-    color: #555;
     margin-bottom: 24px;
 }
 
-/* --- 4. Navigation Menu --- */
-.site-nav {
-    display: block;
-    font-size: 1.1rem;
-    margin-bottom: 24px;
-    color: #333; /* Color of the | separators */
+/* --- 4. Top Header (Aligned with Footer) --- */
+.top-header {
+    width: 100%;
+    max-width: 900px; /* Matches the exact width boundary of your footer */
+    padding: 40px 0px; /* 0px horizontal padding lines it up pixel-perfect with the footer text edges */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.site-nav a {
-    text-decoration: none !important;
-    color: #333 !important;
-    padding: 0 5px;
-    transition: opacity 0.2s;
+/* Forces link states to stay black, removing blue or purple browser styles */
+.header-left,
+.header-left:link,
+.header-left:visited,
+.header-left:active {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    color: #000000 !important;
+    transition: opacity 0.2s ease-in-out;
 }
 
-.site-nav a:hover {
-    text-decoration: underline !important;
+.header-left:hover {
     opacity: 0.6;
 }
 
-/* --- 5. The Name Hover Effect (sanayuk -> about me) --- */
-.name-link {
+.header-pfp {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ccc;
+}
+
+.header-name {
+    font-size: 1rem;
+}
+
+.header-link,
+.header-link:link,
+.header-link:visited,
+.header-link:active {
     text-decoration: none;
-    color: inherit;
-    display: inline-block;
-    position: relative;
-    margin-top: 10px;
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: opacity 0.2s;
 }
 
-.name-link h1 {
-    position: relative;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    transition: none; /* Removed transition to prevent flickering */
+.header-link:hover {
+    opacity: 0.6;
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
-.name-link h1::after {
-    content: attr(data-text);
-    position: absolute;
-    white-space: nowrap;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    background-color: var(--bg-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-    font-style: normal;
-}
-
-.name-link:hover h1::after {
-    opacity: 1;
-}
-
-/* --- 6. Profile & Link Cards --- */
+/* --- 5. Profile & Link Cards --- */
 .profile-pic {
     width: 110px;
     height: 110px;
@@ -150,62 +150,82 @@ p {
     box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
 }
 
-/* --- 7. Media & Contact --- */
-.video-container {
+/* --- 6. New Footer Layout --- */
+.site-footer {
+    padding-top: 20px;
+    padding-bottom: 40px; /* Balanced padding inside the window bottom edge */
+    border-top: 1px solid #333;
     width: 100%;
-    margin-bottom: 24px;
+    max-width: 900px; /* Same max-width configuration as the header */
+    text-align: left !important; 
+    box-sizing: border-box;
+}
+
+.footer-content {
     display: flex;
-    justify-content: center;
+    justify-content: space-between; 
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 30px;
 }
 
-.video-container iframe {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border: 1px solid #ccc;
-    box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+.footer-left {
+    text-align: left !important;
 }
 
-.contact-line {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+.footer-right {
+    text-align: right !important;
 }
 
-.contact-link {
-    display: inline-block;
-    color: var(--text-color);
-    text-decoration: underline;
-    font-size: 1.1rem;
+.footer-heading {
+    font-size: 0.95rem;
+    color: #000000 !important; 
+    margin-bottom: 8px;
+    font-weight: bold; 
+}
+
+.footer-link, .footer-socials a {
+    color: #000000 !important; 
+    text-decoration: none;
+    font-size: 0.95rem;
     transition: opacity 0.2s;
 }
 
-.contact-link:hover {
+.footer-link:hover, .footer-socials a:hover {
     opacity: 0.7;
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
-.tight-header {
-    margin-bottom: 5px;
+.footer-socials {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: #000000; 
+    justify-content: flex-end; 
 }
 
-/* --- 8. Footer --- */
-footer {
-    margin-top: 50px;
-    font-size: 0.85rem;
-    color: #777;
-    line-height: 1.6;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
-    width: 100%;
-    text-align: center;
+.footer-bottom {
+    font-size: 0.8rem;
+    color: #000000 !important; 
+    display: flex;
+    justify-content: flex-start; 
+    border-top: 1px solid #222;
+    padding-top: 15px;
 }
 
-footer p {
-    margin: 5px 0;
-}
+/* --- 7. Mobile Adjustments --- */
+@media (max-width: 600px) {
+    .top-header {
+        width: 100%;
+        padding: 20px 10px;
+    }
 
-/* --- 9. Mobile Adjustments --- */
-@media (max-width: 480px) {
+    .header-name {
+        display: none; /* Keeps it clean on small screens */
+    }
+
     .container {
         max-width: 90%;
     }
@@ -215,23 +235,26 @@ footer p {
         font-size: 1rem;
     }
 
-    .contact-line {
-        flex-direction: column;
-        gap: 5px;
+    .footer-content {
+        flex-direction: column; 
     }
-
-    .separator {
-        display: none;
+    
+    .footer-right, .footer-socials {
+        text-align: left !important;
+        justify-content: flex-start;
     }
 }
 
-/* --- 10. Recents Feed Styles --- */
+footer p {
+    margin: 5px 0;
+}
 
+/* --- 8. Recents Feed Styles --- */
 .feed {
     display: flex;
     flex-direction: column;
     gap: 25px;
-    text-align: left; /* Posts look better left-aligned */
+    text-align: left; 
 }
 
 .post-card {
