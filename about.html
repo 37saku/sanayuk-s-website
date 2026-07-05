@@ -3,50 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | sanayuk</title>
+    <title>About sanayuk</title>
     <link rel="icon" type="image/jpeg" href="snypfp.jpg">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=8">
     <style>
         /* Small unique styles for just this page */
         .bio-text {
-            text-align: justify;
+            text-align: center; 
             line-height: 1.8;
             margin-bottom: 40px;
-        }
-        .back-home {
-            margin-top: 30px;
-            font-style: italic;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <a href="index.html"><img src="snypfp.jpg" alt="Profile Picture" class="profile-pic"></a>
+    <header class="top-header">
+        <a href="index.html" class="header-left">
+            <img src="snypfp.jpg" alt="Profile Picture" class="header-pfp">
+            <span class="header-name">sanayuk</span>
+        </a>
         
-        <h1>About Me</h1>
+        <div class="header-right">
+            <a href="about.html" class="header-link">About</a>
+        </div>
+    </header>
 
-        <nav class="site-nav">
-        <a href="index.html" class="contact-link">Home</a> | 
-        <a href="about.html">About</a> | 
-        <a href="recents.html">Recents</a> | 
-        <a href="socials.html">Socials</a>
-    </nav>
+    <div class="container">
 
         <div class="bio-text">
             <p>
-            Hi my name is Lo Yu Kiu, 16 years old, born and raised in Hong Kong, currently doing whatever I want to do lol.
+                <strong>Name</strong> Elvis Lo Yu Kiu 盧譽翹<br>
+                <strong>Birthday</strong> 2009/02/16 (<span id="my-age"></span> years old)<br>
+                <strong>Location</strong> Hong Kong, China<br>
+                <strong>Website Created</strong> 2023/09/15 18:40 (UTC +8)<br>
+                <strong>Last Updated</strong> 2026/07/05 23:40 (UTC +8)<br>
             </p>
         </div>
+    </div> 
 
-        <div style="margin-top: 40px;">
-            <a href="index.html" class="contact-link">Back to Home</a>
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <h4 class="footer-heading">Contact Me</h4>
+                <a href="mailto:sanayuuuk@gmail.com?subject=Contact from Website" class="footer-link">
+                    sanayuuuk@gmail.com
+                </a>
+            </div>
+
+            <div class="footer-right">
+                <h4 class="footer-heading">Socials</h4>
+                <div class="footer-socials">
+                    <a href="https://www.youtube.com/@sanayuk____" target="_blank">YouTube</a> —
+                    <a href="https://www.instagram.com/sanayuk____/" target="_blank">Instagram</a> —
+                    <a href="https://www.threads.net/@sanayuk____/" target="_blank">Threads</a> —
+                    <a href="https://open.spotify.com/user/31xqgkz4tjc3syadxhh52vzdo4kq?si=254b2dc9a4f743eb&nd=1&dlsi=bdf17cccaf9b42ae" target="_blank">Spotify</a>
+                </div>
+            </div>
         </div>
 
-        <footer>
-            <p>© 2026 sanayuk. All rights reserved.</p>
-        </footer>
-    </div>
+        <div class="footer-bottom">
+            <span>© 2026 | sanayuk</span>
+        </div>
+    </footer>
 
 </body>
 </html>
+
+<script>
+    function calculateAge(birthDateString) {
+        const birthDate = new Date(birthDateString);
+        const today = new Date();
+        
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        
+        return age;
+    }
+
+    const myBirthday = '2009-02-16'; 
+
+    document.getElementById('my-age').innerText = calculateAge(myBirthday);
+</script>
