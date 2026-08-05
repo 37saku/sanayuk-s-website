@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,7 +17,7 @@
         .countdown-card {
             background: var(--link-bg);
             border: 1px solid #ccc;
-            padding: 20px;
+            padding: 15px; /* Reduced padding from 20px */
             border-radius: 4px;
             box-shadow: 1px 1px 0px rgba(0,0,0,0.05);
             display: flex;
@@ -25,18 +25,18 @@
             justify-content: space-between;
         }
         .countdown-subject {
-            font-size: 1.1rem;
+            font-size: 1.05rem; /* Slightly smaller font to fit nicely */
             color: var(--text-color);
             margin-bottom: 5px;
             line-height: 1.3;
         }
         .countdown-date {
-            font-size: 0.9rem;
+            font-size: 0.85rem; /* Slightly smaller */
             color: #888;
             margin-bottom: 12px;
         }
         .countdown-timer {
-            font-size: 1.3rem;
+            font-size: 1.2rem; /* Slightly smaller timer */
             color: #000;
             font-weight: normal;
             font-family: "Times New Roman", Times, serif;
@@ -46,6 +46,7 @@
             color: var(--text-color);
             font-weight: bold;
             font-style: italic;
+            font-size: 1rem;
         }
 
         /* Make it 1 column on mobile phones */
@@ -69,7 +70,8 @@
         </div>
     </header>
 
-    <div class="container" style="max-width: 800px; margin-top: 0;">
+    <!-- Reduced max-width from 800px to 700px -->
+    <div class="container" style="max-width: 700px; margin-top: 0;">
         <h1 style="margin-bottom: 30px;">DSE Countdown</h1>
         
         <div class="countdown-feed" id="countdown-container">
@@ -136,7 +138,7 @@
                 const distance = exam.targetDate - now;
 
                 if (distance <= 0) {
-                    timerEl.innerHTML = "<span class='good-luck'>good luck with your exam!</span>";
+                    timerEl.innerHTML = "<span class='good-luck'>Good luck with your exam!</span>";
                     return;
                 }
 
