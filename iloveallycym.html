@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I love You Ally Chau</title>
+    <style>
+        /* Applies Helvetica globally */
+        body, select, input, textarea, button, p, h1, div {
+            font-family: 'Helvetica', Arial, sans-serif;
+        }
+
+        /* Set a normal scrolling body */
+        body { 
+            margin: 0; 
+            min-height: 100vh; 
+            background: linear-gradient(135deg, #ffffff 0%, #ffd1dc 100%); 
+            background-attachment: fixed; 
+            overflow-x: hidden; 
+        }
+
+        /* ============================
+           SCREEN 1: ENVELOPE STYLES
+           ============================ */
+        #envelope-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+            min-height: 100vh; 
+            width: 100%;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .recipient-text {
+            color: #ff6b8b; 
+            font-size: 24px; 
+            font-weight: bold;
+            margin-bottom: 25px; 
+            letter-spacing: 1px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 260px;
+            height: 160px;
+            background-color: #ffb6c1; 
+            border-radius: 4px;
+            box-shadow: 0 10px 20px rgba(255, 182, 193, 0.6);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 130px solid transparent;
+            border-right: 130px solid transparent;
+            border-top: 90px solid #ff9eb5; 
+            border-radius: 4px;
+            z-index: 2;
+            transition: transform 0.4s ease;
+            transform-origin: top;
+        }
+
+        .envelope::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 130px solid transparent;
+            border-right: 130px solid transparent;
+            border-bottom: 90px solid #ffc2cc;
+            z-index: 1;
+        }
+
+        .envelope:hover {
+            transform: scale(1.05); 
+        }
+
+        .envelope.open::before {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .click-text {
+            color: #ff85a1;
+            font-weight: bold;
+            font-size: 18px;
+            letter-spacing: 1px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        /* ============================
+           SCREEN 2: CONTENT (NOTES + FORMS)
+           ============================ */
+        #content-screen {
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 8vh 20px 10vh 20px; 
+            box-sizing: border-box;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        /* --- NOTES STYLES (MAIN & PREVIOUS) --- */
+        .note-date {
+            display: block;
+            font-size: 14px; 
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .prev-notes-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .prev-notes-wrapper.open {
+            grid-template-rows: 1fr;
+        }
+
+        .prev-notes-inner {
+            overflow: hidden; 
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px; 
+            margin: -20px -20px 10px -20px;
+        }
+
+        .prev-note {
+            background-color: #fff9fa; 
+            border: 1px solid #ffe3e8;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.3);
+            text-align: left; /* All previous notes aligned to the left */
+            font-size: 17px;
+            line-height: 1.6;
+            color: #555;
+            
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s;
+        }
+
+        .prev-notes-wrapper.open .prev-note {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .prev-note:nth-child(1) { transition-delay: 0.1s; }
+        .prev-note:nth-child(2) { transition-delay: 0.25s; }
+        .prev-note:nth-child(3) { transition-delay: 0.4s; }
+
+        /* --- THE MAIN LETTER BOX --- */
+        .letter-box {
+            background-color: white;
+            width: 100%;
+            max-width: 350px; 
+            box-sizing: border-box;
+            padding: 35px 30px; 
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(255, 182, 193, 0.5);
+            text-align: center;
+            margin-bottom: 10px;
+            z-index: 2;
+        }
+
+        .letter-text {
+            color: #444;
+            font-size: 19px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .action-btn {
+            width: 100%;
+            background-color: #ff9eb5; 
+            color: white; 
+            border: none; 
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer; 
+            transition: background-color 0.3s, max-height 0.5s ease, opacity 0.4s ease, margin 0.5s ease, padding 0.5s ease;
+            box-shadow: 0 4px 10px rgba(255, 158, 181, 0.4);
+            max-height: 60px; 
+            opacity: 1;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .action-btn:hover { background-color: #ff85a1; }
+        .action-btn.hidden { max-height: 0; opacity: 0; margin: 0; padding: 0; border: none; }
+
+        .secondary-btn {
+            background: none;
+            border: none;
+            color: #ff85a1;
+            font-size: 14px;
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 5px;
+            font-weight: bold;
+            transition: color 0.3s, max-height 0.4s ease, opacity 0.4s ease;
+            max-height: 30px;
+            opacity: 1;
+            overflow: hidden;
+        }
+
+        .secondary-btn:hover { color: #ff6b8b; }
+        .secondary-btn.hidden { max-height: 0; opacity: 0; margin: 0; padding: 0; }
+
+        /* ============================
+           SLIDE-UP FORM WRAPPERS
+           ============================ */
+        .form-wrapper {
+            display: grid;
+            grid-template-rows: 0fr; 
+            transition: grid-template-rows 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            width: 100%;
+            max-width: 390px;
+        }
+
+        .form-wrapper.open { grid-template-rows: 1fr; }
+
+        .form-inner {
+            overflow: hidden; 
+            display: flex;
+            justify-content: center;
+            padding: 20px; 
+            margin: -20px; 
+        }
+
+        .form-container { 
+            background-color: white;
+            width: 100%;
+            max-width: 350px; 
+            box-sizing: border-box;
+            padding: 35px 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 8px 25px rgba(255, 182, 193, 0.5); 
+            text-align: center;
+            transform: translateY(150%);
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .form-wrapper.open .form-container { transform: translateY(0); }
+
+        h2 { margin-top: 0; color: #333; margin-bottom: 20px; font-size: 22px; }
+
+        /* --- TEXT INPUT & TEXTAREA STYLES --- */
+        input[type="text"], textarea {
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fafafa;
+            box-sizing: border-box;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        textarea {
+            resize: none; 
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #ffb6c1;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(255, 182, 193, 0.5);
+        }
+
+        .dropdown-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .time-row { margin-bottom: 25px; }
+        .separator { font-size: 18px; font-weight: bold; color: #888; }
+
+        select { 
+            font-size: 16px;
+            padding: 10px 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fafafa;
+            cursor: pointer;
+            color: #333;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #ffb6c1;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(255, 182, 193, 0.5);
+        }
+
+        .submit-btn { 
+            width: 100%;
+            padding: 14px;
+            background-color: #ff9eb5; 
+            color: white; 
+            border: none; 
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer; 
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover { background-color: #ff85a1; }
+    </style>
+</head>
+<body>
+
+    <!-- SCREEN 1: THE ENVELOPE -->
+    <div id="envelope-screen">
+        <div class="recipient-text">Dear Ally Chau</div>
+        <div class="envelope" id="envelope"></div>
+        <p class="click-text">Click to open</p>
+    </div>
+
+    <!-- SCREEN 2: THE CONTENT (Notes & Forms) -->
+    <div id="content-screen">
+        
+        <!-- The Hidden Previous Notes -->
+        <div class="prev-notes-wrapper" id="prev-notes-wrapper">
+            <div class="prev-notes-inner">
+                
+                <!-- PREVIOUS NOTE 1 -->
+                <div class="prev-note">
+                    BB一個月快樂arr  ^3^<br>
+                    雖然我哋呢個月經歷咗好多嘢，<br>
+                    但係我都好鍾意同妳喺埋一齊嘅每分每秒，<br>
+                    我真係好鍾意好鍾意妳㗎&lt;3<br>
+                    希望我哋以後仲有好多個好多個一個月 &lt;3<br><br>
+                    - kiu
+                    <span class="note-date">2026.06.19</span>
+                </div>
+                
+                <!-- PREVIOUS NOTE 2 -->
+                <div class="prev-note">
+                    Dear Ally,<br><br>
+                    Let’s be bald together!<br><br>
+                    - kiu
+                    <span class="note-date">2026.08.13</span>
+                </div>
+
+                <!-- PREVIOUS NOTE 3 -->
+                <div class="prev-note">
+                    Hi mommy!!! Happy 4 moths &gt;&lt;!<br>
+                    I’ll try my best to be a better bf for you and love you more and more everyday!!! &lt;3<br>
+                    I hope you can be happy everyday and not so emo la TvT<br>
+                    You are truly my favourite <del>ni</del> and <del>fu</del> person &lt;3<br>
+                    I love you mommy &lt;3 &lt;3 &lt;3<br><br>
+                    - kiu
+                    <span class="note-date">2026.09.15</span>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- The Static Main Letter Box -->
+        <div class="letter-box">
+            <div class="letter-text">
+                I love you ally chau my favourite girl ever!!!<br><br>
+                - kiu
+                <span class="note-date">2026.10.05</span>
+            </div>
+            
+            <div class="button-group">
+                <button class="action-btn" id="email-me-btn">Email me something</button>
+                <button class="action-btn" id="reserve-btn">Reserve a Date</button>
+                <button class="secondary-btn" id="prev-btn">See previous notes</button>
+            </div>
+        </div>
+
+        <!-- The Hidden Form for "Email me something" -->
+        <div class="form-wrapper" id="email-form-wrapper">
+            <div class="form-inner">
+                <div class="form-container">
+                    <h2>Send a Message</h2>
+                    <form id="emailMsgForm">
+                        <textarea id="customMessage" placeholder="What do you want to say?" required rows="5"></textarea>
+                        <button type="submit" class="submit-btn">Send via Email</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Hidden Form for "Reserve a Date" -->
+        <div class="form-wrapper" id="date-form-wrapper">
+            <div class="form-inner">
+                <div class="form-container">
+                    <h2>Plan Our Date</h2>
+                    <form id="dateForm">
+                        
+                        <input type="text" id="whereTo" placeholder="Where to?" required>
+                        <input type="text" id="doWhat" placeholder="Do what?" required>
+
+                        <div class="dropdown-row">
+                            <select id="year" title="Year"></select>
+                            <span class="separator">/</span>
+                            <select id="month" title="Month"></select>
+                            <span class="separator">/</span>
+                            <select id="day" title="Day"></select>
+                        </div>
+
+                        <div class="dropdown-row time-row">
+                            <select id="hour" title="Hour"></select>
+                            <span class="separator">:</span>
+                            <select id="minute" title="Minute"></select>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Send via Email</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        /* --- DOM ELEMENTS --- */
+        const envelope = document.getElementById('envelope');
+        const envelopeScreen = document.getElementById('envelope-screen');
+        const contentScreen = document.getElementById('content-screen');
+        
+        const emailMeBtn = document.getElementById('email-me-btn');
+        const reserveBtn = document.getElementById('reserve-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        
+        const emailFormWrapper = document.getElementById('email-form-wrapper');
+        const dateFormWrapper = document.getElementById('date-form-wrapper');
+        const prevNotesWrapper = document.getElementById('prev-notes-wrapper');
+
+        const yearSel = document.getElementById('year');
+        const monthSel = document.getElementById('month');
+        const daySel = document.getElementById('day');
+        const hourSel = document.getElementById('hour');
+        const minSel = document.getElementById('minute');
+
+        /* --- ENVELOPE TO CONTENT ANIMATION --- */
+        envelope.addEventListener('click', function() {
+            envelope.classList.add('open');
+            setTimeout(() => {
+                envelopeScreen.style.opacity = '0';
+                envelopeScreen.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    envelopeScreen.style.display = 'none';
+                    contentScreen.style.display = 'flex'; 
+                    setTimeout(() => {
+                        contentScreen.style.opacity = '1';
+                        contentScreen.style.transform = 'scale(1)';
+                    }, 50);
+                }, 500); 
+            }, 400); 
+        });
+
+        /* --- BUTTON ANIMATIONS --- */
+        prevBtn.addEventListener('click', function() {
+            prevBtn.classList.add('hidden');
+            prevNotesWrapper.classList.add('open');
+            
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        });
+
+        /* --- TOGGLEABLE FORMS LOGIC --- */
+        emailMeBtn.addEventListener('click', function() {
+            const isEmailOpen = emailFormWrapper.classList.contains('open');
+            
+            if (!isEmailOpen) {
+                emailFormWrapper.classList.add('open');
+                dateFormWrapper.classList.remove('open');
+            } else {
+                emailFormWrapper.classList.remove('open');
+            }
+        });
+
+        reserveBtn.addEventListener('click', function() {
+            const isDateOpen = dateFormWrapper.classList.contains('open');
+            
+            if (!isDateOpen) {
+                dateFormWrapper.classList.add('open');
+                emailFormWrapper.classList.remove('open');
+            } else {
+                dateFormWrapper.classList.remove('open');
+            }
+        });
+
+
+        /* --- DYNAMIC DATE DROPDOWNS --- */
+        function populate(select, start, end, selected) {
+            select.innerHTML = '';
+            for (let i = start; i <= end; i++) {
+                const opt = document.createElement('option');
+                const val = i.toString().padStart(2, '0');
+                opt.value = val;
+                opt.text = val;
+                if (i === selected) opt.selected = true;
+                select.appendChild(opt);
+            }
+        }
+
+        function updateDropdowns() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            
+            let y = parseInt(yearSel.value) || currentYear;
+            if (yearSel.options.length === 0) populate(yearSel, currentYear, currentYear + 10, y);
+            y = parseInt(yearSel.value);
+
+            let selM = parseInt(monthSel.value) || (y === currentYear ? now.getMonth() + 1 : 1);
+            const minM = (y === currentYear) ? now.getMonth() + 1 : 1;
+            if (selM < minM) selM = minM;
+            populate(monthSel, minM, 12, selM);
+            
+            let selD = parseInt(daySel.value) || ((y === currentYear && selM === now.getMonth() + 1) ? now.getDate() : 1);
+            const daysInMonth = new Date(y, selM, 0).getDate();
+            const minD = (y === currentYear && selM === now.getMonth() + 1) ? now.getDate() : 1;
+            if (selD < minD) selD = minD;
+            if (selD > daysInMonth) selD = daysInMonth;
+            populate(daySel, minD, daysInMonth, selD);
+
+            let selH = parseInt(hourSel.value) || ((y === currentYear && selM === now.getMonth() + 1 && selD === now.getDate()) ? now.getHours() : 0);
+            const minH = (y === currentYear && selM === now.getMonth() + 1 && selD === now.getDate()) ? now.getHours() : 0;
+            if (selH < minH) selH = minH;
+            populate(hourSel, minH, 23, selH);
+
+            let selMin = parseInt(minSel.value) || ((y === currentYear && selM === now.getMonth() + 1 && selD === now.getDate() && selH === now.getHours()) ? now.getMinutes() : 0);
+            const minMinute = (y === currentYear && selM === now.getMonth() + 1 && selD === now.getDate() && selH === now.getHours()) ? now.getMinutes() : 0;
+            if (selMin < minMinute) selMin = minMinute;
+            populate(minSel, minMinute, 59, selMin);
+        }
+
+        yearSel.addEventListener('change', updateDropdowns);
+        monthSel.addEventListener('change', updateDropdowns);
+        daySel.addEventListener('change', updateDropdowns);
+        hourSel.addEventListener('change', updateDropdowns);
+
+        updateDropdowns();
+
+
+        /* --- 1. EMAIL FORM SUBMISSION LOGIC --- */
+        document.getElementById('emailMsgForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            const customMsg = document.getElementById('customMessage').value;
+            
+            const emailSubject = "A message for kiukiu";
+            const emailBody = `Dear my good boy kiukiu,\n\n${customMsg}\n\nBest Regards,\nAlly Chau\nsanayuk’s mommy`;
+            
+            const mailtoLink = `mailto:elvisloyukiu@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+            window.location.href = mailtoLink;
+        });
+
+
+        /* --- 2. DATE FORM SUBMISSION LOGIC --- */
+        document.getElementById('dateForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            const whereTo = document.getElementById('whereTo').value;
+            const doWhat = document.getElementById('doWhat').value;
+
+            const y = document.getElementById('year').value;
+            const m = document.getElementById('month').value;
+            const d = document.getElementById('day').value;
+            const h = document.getElementById('hour').value;
+            const min = document.getElementById('minute').value;
+            
+            const emailSubject = "Reserving a date";
+            const emailBody = `Dear my good boy kiukiu,\n\nLet’s go to ${whereTo} to ${doWhat} at ${y}/${m}/${d} ${h}:${min}!!!\n\nBest Regards,\nAlly Chau\nsanayuk’s mommy`;
+            
+            const mailtoLink = `mailto:elvisloyukiu@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+            window.location.href = mailtoLink;
+        });
+    </script>
+
+</body>
+</html>
