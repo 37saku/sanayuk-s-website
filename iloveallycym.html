@@ -141,7 +141,6 @@
             font-size: 22px;
         }
 
-        /* The 4-digit input container */
         .password-inputs {
             display: flex;
             justify-content: center;
@@ -161,7 +160,7 @@
             transition: all 0.3s ease;
             box-sizing: border-box;
             padding: 0;
-            -webkit-text-security: disc; /* Ensures digits appear as masked password dots */
+            -webkit-text-security: disc; 
         }
 
         .pwd-char:focus {
@@ -315,7 +314,7 @@
         }
 
         .secondary-btn:hover { color: #ff6b8b; }
-        .secondary-btn.hidden { max-height: 0; opacity: 0; margin: 0; padding: 0; border: none; }
+        .secondary-btn.hidden { max-height: 0; opacity: 0; margin: 0; padding: 0; }
 
         /* ============================
            SLIDE-UP FORM WRAPPERS
@@ -333,7 +332,8 @@
         .form-inner {
             overflow: hidden; 
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             padding: 20px; 
             margin: -20px; 
         }
@@ -379,6 +379,51 @@
             border-color: #ffb6c1;
             background-color: #fff;
             box-shadow: 0 0 5px rgba(255, 182, 193, 0.5);
+        }
+
+        /* --- Custom Range Slider Styles --- */
+        .slider-label {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+            display: block;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .slider-label strong {
+            color: #ff6b8b;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+            margin: 10px 0 25px 0;
+        }
+
+        input[type="range"]:focus {
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #ffe3e8;
+            border-radius: 4px;
+            border: 1px solid #ffb6c1;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #ff6b8b;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -9px; 
+            box-shadow: 0 2px 5px rgba(255,107,139,0.5);
         }
 
         .dropdown-row {
@@ -500,6 +545,7 @@
             <div class="button-group">
                 <button class="action-btn" id="email-me-btn">Email me something</button>
                 <button class="action-btn" id="reserve-btn">Reserve a Date</button>
+                <button class="action-btn" id="air-book-btn">Little air book</button>
                 <button class="secondary-btn" id="prev-btn">See previous notes</button>
             </div>
         </div>
@@ -547,6 +593,24 @@
             </div>
         </div>
 
+        <!-- The Hidden Form for "Little Air Book" -->
+        <div class="form-wrapper" id="air-book-wrapper">
+            <div class="form-inner">
+                <div class="form-container">
+                    <h2>Little Air Book</h2>
+                    <form id="airBookForm">
+                        
+                        <textarea id="airWhy" placeholder="Reason..?" required rows="4"></textarea>
+
+                        <label class="slider-label" for="angerLevel">How angry are you from 1-100: <strong id="angerVal">50</strong></label>
+                        <input type="range" id="angerLevel" min="1" max="100" value="50">
+                        
+                        <button type="submit" class="submit-btn" id="air-submit-btn">Send Entry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -567,10 +631,12 @@
         
         const emailMeBtn = document.getElementById('email-me-btn');
         const reserveBtn = document.getElementById('reserve-btn');
+        const airBookBtn = document.getElementById('air-book-btn');
         const prevBtn = document.getElementById('prev-btn');
         
         const emailFormWrapper = document.getElementById('email-form-wrapper');
         const dateFormWrapper = document.getElementById('date-form-wrapper');
+        const airBookWrapper = document.getElementById('air-book-wrapper');
         const prevNotesWrapper = document.getElementById('prev-notes-wrapper');
 
         const yearSel = document.getElementById('year');
@@ -578,6 +644,9 @@
         const daySel = document.getElementById('day');
         const hourSel = document.getElementById('hour');
         const minSel = document.getElementById('minute');
+
+        const angerLevelInput = document.getElementById('angerLevel');
+        const angerValDisplay = document.getElementById('angerVal');
 
         /* --- STAMP GENERATOR HELPER --- */
         function getFormattedTimestamp() {
@@ -632,7 +701,6 @@
         }
 
         pwdInputs.forEach((input, index) => {
-            // Strictly disallow non-numeric characters when typing
             input.addEventListener('beforeinput', (e) => {
                 if (e.data && !/^\d+$/.test(e.data)) {
                     e.preventDefault();
@@ -640,7 +708,6 @@
             });
 
             input.addEventListener('input', () => {
-                // Sanitize any non-digits that slip through
                 input.value = input.value.replace(/\D/g, '');
 
                 if (input.value.length === 1 && index < pwdInputs.length - 1) {
@@ -661,7 +728,6 @@
                 }
             });
 
-            // Strictly allow only numbers when pasting
             input.addEventListener('paste', (e) => {
                 e.preventDefault();
                 const rawPasted = (e.clipboardData.getData('text') || '').trim();
@@ -681,7 +747,7 @@
             });
         });
 
-        /* --- BUTTON ANIMATIONS --- */
+        /* --- BUTTON ANIMATIONS (Previous Notes) --- */
         prevBtn.addEventListener('click', function() {
             prevBtn.classList.add('hidden');
             prevNotesWrapper.classList.add('open');
@@ -696,6 +762,7 @@
             if (!isEmailOpen) {
                 emailFormWrapper.classList.add('open');
                 dateFormWrapper.classList.remove('open');
+                airBookWrapper.classList.remove('open');
             } else {
                 emailFormWrapper.classList.remove('open');
             }
@@ -706,9 +773,26 @@
             if (!isDateOpen) {
                 dateFormWrapper.classList.add('open');
                 emailFormWrapper.classList.remove('open');
+                airBookWrapper.classList.remove('open');
             } else {
                 dateFormWrapper.classList.remove('open');
             }
+        });
+
+        airBookBtn.addEventListener('click', function() {
+            const isAirBookOpen = airBookWrapper.classList.contains('open');
+            if (!isAirBookOpen) {
+                airBookWrapper.classList.add('open');
+                emailFormWrapper.classList.remove('open');
+                dateFormWrapper.classList.remove('open');
+            } else {
+                airBookWrapper.classList.remove('open');
+            }
+        });
+
+        /* --- SLIDER UPDATE LOGIC --- */
+        angerLevelInput.addEventListener('input', function() {
+            angerValDisplay.textContent = this.value;
         });
 
         /* --- DYNAMIC DATE DROPDOWNS --- */
@@ -763,7 +847,7 @@
         updateDropdowns();
 
         /* --- BACKGROUND EMAIL SENDING (FETCH) --- */
-        async function sendEmailBackground(subject, message, buttonElement) {
+        async function sendEmailBackground(subject, message, buttonElement, successText = 'Sent with love! ❤️') {
             buttonElement.innerText = 'Sending...';
             buttonElement.disabled = true;
 
@@ -781,8 +865,8 @@
                 });
 
                 if (response.ok) {
-                    buttonElement.innerText = 'Sent with love! ❤️';
-                    buttonElement.style.backgroundColor = '#8cd98c'; 
+                    buttonElement.innerText = successText;
+                    buttonElement.style.backgroundColor = successText.includes('angry') ? '#ff6b8b' : '#8cd98c'; 
                 } else {
                     buttonElement.innerText = 'Oops! Failed to send.';
                     buttonElement.style.backgroundColor = '#ff6b8b';
@@ -826,6 +910,21 @@
             const emailBody = `Dear my good boy kiukiu,\n\nLet’s go to ${whereTo} to ${doWhat} at ${y}/${m}/${d} ${h}:${min}!!!\n\nBest Regards,\nAlly Chau\nsanayuk’s mommy\n\nSent at: ${timestamp}`;
             
             sendEmailBackground(emailSubject, emailBody, submitBtn);
+        });
+
+        /* --- 3. SEND LITTLE AIR BOOK IN BACKGROUND --- */
+        document.getElementById('airBookForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            const whyText = document.getElementById('airWhy').value;
+            const angerValue = document.getElementById('angerLevel').value;
+            const submitBtn = document.getElementById('air-submit-btn');
+            const timestamp = getFormattedTimestamp();
+
+            const emailSubject = "Little Air Book Entry";
+            const emailBody = `Dear my good boy kiukiu,\n\nHere is my Little Air Book entry:\nWhy: ${whyText}\nAnger level: ${angerValue}/100\n\nBest Regards,\nAlly Chau\nsanayuk’s mommy\n\nSent at: ${timestamp}`;
+            
+            // Sends with custom angry success text
+            sendEmailBackground(emailSubject, emailBody, submitBtn, 'Sent with angry 😡');
         });
     </script>
 
