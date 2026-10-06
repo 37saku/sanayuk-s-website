@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I love You Ally Chau</title>
+    <title>An Invitation</title>
     <style>
         /* Applies Helvetica globally */
         body, select, input, textarea, button, p, h1, div {
@@ -30,6 +30,8 @@
             min-height: 100vh; 
             width: 100%;
             transition: opacity 0.5s ease, transform 0.5s ease;
+            position: absolute;
+            z-index: 10;
         }
 
         .recipient-text {
@@ -105,6 +107,78 @@
         }
 
         /* ============================
+           SCREEN 1.5: PASSWORD STYLES
+           ============================ */
+        #password-screen {
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            position: absolute;
+            z-index: 8;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .password-box {
+            background-color: white;
+            width: 100%;
+            max-width: 350px; 
+            box-sizing: border-box;
+            padding: 35px 30px; 
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(255, 182, 193, 0.5);
+            text-align: center;
+        }
+
+        .password-box h2 {
+            margin-top: 0; 
+            color: #333; 
+            margin-bottom: 25px; 
+            font-size: 22px;
+        }
+
+        .password-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .pwd-char {
+            width: 50px;
+            height: 60px;
+            font-size: 28px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background-color: #fafafa;
+            color: #333;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        .pwd-char:focus {
+            outline: none;
+            border-color: #ffb6c1;
+            background-color: #fff;
+            box-shadow: 0 0 8px rgba(255, 182, 193, 0.6);
+        }
+
+        .error-msg {
+            color: #ff6b8b;
+            font-size: 14px;
+            margin-top: -5px;
+            margin-bottom: 0;
+            display: none; 
+            font-weight: bold;
+        }
+
+        /* ============================
            SCREEN 2: CONTENT (NOTES + FORMS)
            ============================ */
         #content-screen {
@@ -117,9 +191,9 @@
             opacity: 0;
             transform: scale(0.95);
             transition: opacity 0.6s ease, transform 0.6s ease;
+            position: relative; 
         }
 
-        /* --- NOTES STYLES (MAIN & PREVIOUS) --- */
         .note-date {
             display: block;
             font-size: 14px; 
@@ -156,7 +230,7 @@
             padding: 25px 30px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(255, 182, 193, 0.3);
-            text-align: left; /* All previous notes aligned to the left */
+            text-align: left; 
             font-size: 17px;
             line-height: 1.6;
             color: #555;
@@ -175,7 +249,6 @@
         .prev-note:nth-child(2) { transition-delay: 0.25s; }
         .prev-note:nth-child(3) { transition-delay: 0.4s; }
 
-        /* --- THE MAIN LETTER BOX --- */
         .letter-box {
             background-color: white;
             width: 100%;
@@ -280,7 +353,6 @@
 
         h2 { margin-top: 0; color: #333; margin-bottom: 20px; font-size: 22px; }
 
-        /* --- TEXT INPUT & TEXTAREA STYLES --- */
         input[type="text"], textarea {
             width: 100%;
             font-size: 16px;
@@ -292,10 +364,12 @@
             box-sizing: border-box;
             color: #333;
             transition: all 0.3s ease;
+            text-align: center; 
         }
 
         textarea {
             resize: none; 
+            text-align: left; 
         }
 
         input[type="text"]:focus, textarea:focus {
@@ -347,6 +421,7 @@
         }
 
         .submit-btn:hover { background-color: #ff85a1; }
+        .submit-btn:disabled { background-color: #ccc; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -356,6 +431,20 @@
         <div class="recipient-text">Dear Ally Chau</div>
         <div class="envelope" id="envelope"></div>
         <p class="click-text">Click to open</p>
+    </div>
+
+    <!-- SCREEN 1.5: THE PASSWORD SCREEN (4 Digits) -->
+    <div id="password-screen">
+        <div class="password-box">
+            <h2>Enter Password</h2>
+            <div class="password-inputs">
+                <input type="password" class="pwd-char" maxlength="1" autocomplete="off">
+                <input type="password" class="pwd-char" maxlength="1" autocomplete="off">
+                <input type="password" class="pwd-char" maxlength="1" autocomplete="off">
+                <input type="password" class="pwd-char" maxlength="1" autocomplete="off">
+            </div>
+            <p class="error-msg" id="password-error">Incorrect password. Try again!</p>
+        </div>
     </div>
 
     <!-- SCREEN 2: THE CONTENT (Notes & Forms) -->
@@ -386,7 +475,7 @@
 
                 <!-- PREVIOUS NOTE 3 -->
                 <div class="prev-note">
-                    Hi mommy!!! Happy 4 moths &gt;&lt;!<br>
+                    Hi mommy!!! Happy 4 months &gt;&lt;!<br>
                     I’ll try my best to be a better bf for you and love you more and more everyday!!! &lt;3<br>
                     I hope you can be happy everyday and not so emo la TvT<br>
                     You are truly my favourite <del>ni</del> and <del>fu</del> person &lt;3<br>
@@ -420,7 +509,7 @@
                     <h2>Send a Message</h2>
                     <form id="emailMsgForm">
                         <textarea id="customMessage" placeholder="What do you want to say?" required rows="5"></textarea>
-                        <button type="submit" class="submit-btn">Send via Email</button>
+                        <button type="submit" class="submit-btn" id="msg-submit-btn">Send Message</button>
                     </form>
                 </div>
             </div>
@@ -450,7 +539,7 @@
                             <select id="minute" title="Minute"></select>
                         </div>
                         
-                        <button type="submit" class="submit-btn">Send via Email</button>
+                        <button type="submit" class="submit-btn" id="date-submit-btn">Reserve Date</button>
                     </form>
                 </div>
             </div>
@@ -459,9 +548,19 @@
     </div>
 
     <script>
+        /* ========================================================
+           LIVE FORMSPREE ENDPOINT:
+           ======================================================== */
+        const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xkjoonry';
+
         /* --- DOM ELEMENTS --- */
         const envelope = document.getElementById('envelope');
         const envelopeScreen = document.getElementById('envelope-screen');
+        
+        const passwordScreen = document.getElementById('password-screen');
+        const pwdInputs = document.querySelectorAll('.pwd-char');
+        const passwordError = document.getElementById('password-error');
+        
         const contentScreen = document.getElementById('content-screen');
         
         const emailMeBtn = document.getElementById('email-me-btn');
@@ -478,7 +577,19 @@
         const hourSel = document.getElementById('hour');
         const minSel = document.getElementById('minute');
 
-        /* --- ENVELOPE TO CONTENT ANIMATION --- */
+        /* --- STAMP GENERATOR HELPER --- */
+        function getFormattedTimestamp() {
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const hh = String(now.getHours()).padStart(2, '0');
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            const ss = String(now.getSeconds()).padStart(2, '0');
+            return `${y}/${m}/${d} ${hh}:${mm}:${ss}`;
+        }
+
+        /* --- STAGE 1: ENVELOPE TO PASSWORD ANIMATION --- */
         envelope.addEventListener('click', function() {
             envelope.classList.add('open');
             setTimeout(() => {
@@ -486,20 +597,79 @@
                 envelopeScreen.style.transform = 'scale(0.8)';
                 setTimeout(() => {
                     envelopeScreen.style.display = 'none';
-                    contentScreen.style.display = 'flex'; 
+                    passwordScreen.style.display = 'flex'; 
+                    setTimeout(() => {
+                        passwordScreen.style.opacity = '1';
+                        passwordScreen.style.transform = 'scale(1)';
+                        pwdInputs[0].focus(); 
+                    }, 50);
+                }, 500); 
+            }, 400); 
+        });
+
+        /* --- MULTI-BOX PASSWORD LOGIC --- */
+        function checkPassword(pwd) {
+            if (pwd === '0515') {
+                passwordError.style.display = 'none';
+                passwordScreen.style.opacity = '0';
+                passwordScreen.style.transform = 'scale(0.8)';
+                
+                setTimeout(() => {
+                    passwordScreen.style.display = 'none';
+                    contentScreen.style.display = 'flex';
                     setTimeout(() => {
                         contentScreen.style.opacity = '1';
                         contentScreen.style.transform = 'scale(1)';
                     }, 50);
-                }, 500); 
-            }, 400); 
+                }, 500);
+            } else {
+                passwordError.style.display = 'block';
+                pwdInputs.forEach(i => i.value = ''); 
+                pwdInputs[0].focus(); 
+            }
+        }
+
+        pwdInputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                if (input.value.length === 1 && index < pwdInputs.length - 1) {
+                    pwdInputs[index + 1].focus();
+                }
+                const enteredPwd = Array.from(pwdInputs).map(i => i.value).join('');
+                if (enteredPwd.length === 4) {
+                    checkPassword(enteredPwd);
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace') {
+                    passwordError.style.display = 'none';
+                    if (input.value === '' && index > 0) {
+                        pwdInputs[index - 1].focus();
+                    }
+                }
+            });
+
+            input.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const pastedData = e.clipboardData.getData('text').trim().slice(0, 4);
+                if (/^\d+$/.test(pastedData)) {
+                    pastedData.split('').forEach((char, i) => {
+                        if (pwdInputs[i]) pwdInputs[i].value = char;
+                    });
+                    const enteredPwd = Array.from(pwdInputs).map(i => i.value).join('');
+                    if (enteredPwd.length === 4) {
+                        checkPassword(enteredPwd);
+                    } else {
+                        pwdInputs[enteredPwd.length].focus();
+                    }
+                }
+            });
         });
 
         /* --- BUTTON ANIMATIONS --- */
         prevBtn.addEventListener('click', function() {
             prevBtn.classList.add('hidden');
             prevNotesWrapper.classList.add('open');
-            
             setTimeout(() => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }, 100);
@@ -508,7 +678,6 @@
         /* --- TOGGLEABLE FORMS LOGIC --- */
         emailMeBtn.addEventListener('click', function() {
             const isEmailOpen = emailFormWrapper.classList.contains('open');
-            
             if (!isEmailOpen) {
                 emailFormWrapper.classList.add('open');
                 dateFormWrapper.classList.remove('open');
@@ -519,7 +688,6 @@
 
         reserveBtn.addEventListener('click', function() {
             const isDateOpen = dateFormWrapper.classList.contains('open');
-            
             if (!isDateOpen) {
                 dateFormWrapper.classList.add('open');
                 emailFormWrapper.classList.remove('open');
@@ -527,7 +695,6 @@
                 dateFormWrapper.classList.remove('open');
             }
         });
-
 
         /* --- DYNAMIC DATE DROPDOWNS --- */
         function populate(select, start, end, selected) {
@@ -580,27 +747,59 @@
 
         updateDropdowns();
 
+        /* --- BACKGROUND EMAIL SENDING (FETCH) --- */
+        async function sendEmailBackground(subject, message, buttonElement) {
+            buttonElement.innerText = 'Sending...';
+            buttonElement.disabled = true;
 
-        /* --- 1. EMAIL FORM SUBMISSION LOGIC --- */
+            try {
+                const response = await fetch(FORMSPREE_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        subject: subject,
+                        message: message
+                    })
+                });
+
+                if (response.ok) {
+                    buttonElement.innerText = 'Sent with love! ❤️';
+                    buttonElement.style.backgroundColor = '#8cd98c'; 
+                } else {
+                    buttonElement.innerText = 'Oops! Failed to send.';
+                    buttonElement.style.backgroundColor = '#ff6b8b';
+                    buttonElement.disabled = false;
+                }
+            } catch (error) {
+                buttonElement.innerText = 'Error! Try again.';
+                buttonElement.style.backgroundColor = '#ff6b8b';
+                buttonElement.disabled = false;
+            }
+        }
+
+        /* --- 1. SEND CUSTOM MESSAGE IN BACKGROUND --- */
         document.getElementById('emailMsgForm').addEventListener('submit', function(e) {
             e.preventDefault(); 
-            
             const customMsg = document.getElementById('customMessage').value;
-            
+            const submitBtn = document.getElementById('msg-submit-btn');
+            const timestamp = getFormattedTimestamp();
+
             const emailSubject = "A message for kiukiu";
-            const emailBody = `Dear my good boy kiukiu,\n\n${customMsg}\n\nBest Regards,\nAlly Chau\nsanayuk’s mommy`;
+            const emailBody = `Dear my good boy kiukiu,\n\n${customMsg}\n\nBest Regards,\nAlly Chau\nsanayuk’s mommy\n\nSent at: ${timestamp}`;
             
-            const mailtoLink = `mailto:elvisloyukiu@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-            window.location.href = mailtoLink;
+            sendEmailBackground(emailSubject, emailBody, submitBtn);
         });
 
-
-        /* --- 2. DATE FORM SUBMISSION LOGIC --- */
+        /* --- 2. SEND DATE RESERVATION IN BACKGROUND --- */
         document.getElementById('dateForm').addEventListener('submit', function(e) {
             e.preventDefault(); 
-            
             const whereTo = document.getElementById('whereTo').value;
             const doWhat = document.getElementById('doWhat').value;
+            const submitBtn = document.getElementById('date-submit-btn');
+            const timestamp = getFormattedTimestamp();
 
             const y = document.getElementById('year').value;
             const m = document.getElementById('month').value;
@@ -609,10 +808,9 @@
             const min = document.getElementById('minute').value;
             
             const emailSubject = "Reserving a date";
-            const emailBody = `Dear my good boy kiukiu,\n\nLet’s go to ${whereTo} to ${doWhat} at ${y}/${m}/${d} ${h}:${min}!!!\n\nBest Regards,\nAlly Chau\nsanayuk’s mommy`;
+            const emailBody = `Dear my good boy kiukiu,\n\nLet’s go to ${whereTo} to ${doWhat} at ${y}/${m}/${d} ${h}:${min}!!!\n\nBest Regards,\nAlly Chau\nsanayuk’s mommy\n\nSent at: ${timestamp}`;
             
-            const mailtoLink = `mailto:elvisloyukiu@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-            window.location.href = mailtoLink;
+            sendEmailBackground(emailSubject, emailBody, submitBtn);
         });
     </script>
 
