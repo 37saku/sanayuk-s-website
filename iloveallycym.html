@@ -141,6 +141,7 @@
             font-size: 22px;
         }
 
+        /* The 4-digit input container */
         .password-inputs {
             display: flex;
             justify-content: center;
@@ -160,6 +161,7 @@
             transition: all 0.3s ease;
             box-sizing: border-box;
             padding: 0;
+            -webkit-text-security: disc; /* Ensures digits appear as masked password dots */
         }
 
         .pwd-char:focus {
@@ -313,7 +315,7 @@
         }
 
         .secondary-btn:hover { color: #ff6b8b; }
-        .secondary-btn.hidden { max-height: 0; opacity: 0; margin: 0; padding: 0; }
+        .secondary-btn.hidden { max-height: 0; opacity: 0; margin: 0; padding: 0; border: none; }
 
         /* ============================
            SLIDE-UP FORM WRAPPERS
@@ -433,15 +435,15 @@
         <p class="click-text">Click to open</p>
     </div>
 
-    <!-- SCREEN 1.5: THE PASSWORD SCREEN (4 Digits) -->
+    <!-- SCREEN 1.5: THE PASSWORD SCREEN (Strictly Numeric + Numpad) -->
     <div id="password-screen">
         <div class="password-box">
             <h2>Enter Password</h2>
             <div class="password-inputs">
-                <input type="password" class="pwd-char" maxlength="1" autocomplete="off">
-                <input type="password" class="pwd-char" maxlength="1" autocomplete="off">
-                <input type="password" class="pwd-char" maxlength="1" autocomplete="off">
-                <input type="password" class="pwd-char" maxlength="1" autocomplete="off">
+                <input type="password" class="pwd-char" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code">
+                <input type="password" class="pwd-char" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code">
+                <input type="password" class="pwd-char" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code">
+                <input type="password" class="pwd-char" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code">
             </div>
             <p class="error-msg" id="password-error">Incorrect password. Try again!</p>
         </div>
@@ -630,7 +632,17 @@
         }
 
         pwdInputs.forEach((input, index) => {
+            // Strictly disallow non-numeric characters when typing
+            input.addEventListener('beforeinput', (e) => {
+                if (e.data && !/^\d+$/.test(e.data)) {
+                    e.preventDefault();
+                }
+            });
+
             input.addEventListener('input', () => {
+                // Sanitize any non-digits that slip through
+                input.value = input.value.replace(/\D/g, '');
+
                 if (input.value.length === 1 && index < pwdInputs.length - 1) {
                     pwdInputs[index + 1].focus();
                 }
@@ -649,17 +661,20 @@
                 }
             });
 
+            // Strictly allow only numbers when pasting
             input.addEventListener('paste', (e) => {
                 e.preventDefault();
-                const pastedData = e.clipboardData.getData('text').trim().slice(0, 4);
-                if (/^\d+$/.test(pastedData)) {
-                    pastedData.split('').forEach((char, i) => {
-                        if (pwdInputs[i]) pwdInputs[i].value = char;
+                const rawPasted = (e.clipboardData.getData('text') || '').trim();
+                const digitsOnly = rawPasted.replace(/\D/g, '').slice(0, 4);
+
+                if (digitsOnly.length > 0) {
+                    digitsOnly.split('').forEach((digit, i) => {
+                        if (pwdInputs[i]) pwdInputs[i].value = digit;
                     });
                     const enteredPwd = Array.from(pwdInputs).map(i => i.value).join('');
                     if (enteredPwd.length === 4) {
                         checkPassword(enteredPwd);
-                    } else {
+                    } else if (pwdInputs[enteredPwd.length]) {
                         pwdInputs[enteredPwd.length].focus();
                     }
                 }
