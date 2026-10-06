@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>An Invitation</title>
+    <title>I LOVE ALLY CHAU</title>
     <style>
         /* Applies Helvetica globally */
         body, select, input, textarea, button, p, h1, div {
@@ -601,6 +601,9 @@
                     <form id="airBookForm">
                         
                         <textarea id="airWhy" placeholder="Reason..?" required rows="4"></textarea>
+                        
+                        <!-- NEW TEXT BOX ADDED HERE -->
+                        <textarea id="airImprove" placeholder="How should I improve?" required rows="4"></textarea>
 
                         <label class="slider-label" for="angerLevel">How angry are you from 1-100: <strong id="angerVal">50</strong></label>
                         <input type="range" id="angerLevel" min="1" max="100" value="50">
@@ -916,12 +919,13 @@
         document.getElementById('airBookForm').addEventListener('submit', function(e) {
             e.preventDefault(); 
             const whyText = document.getElementById('airWhy').value;
+            const improveText = document.getElementById('airImprove').value;
             const angerValue = document.getElementById('angerLevel').value;
             const submitBtn = document.getElementById('air-submit-btn');
             const timestamp = getFormattedTimestamp();
 
             const emailSubject = "Little Air Book Entry";
-            const emailBody = `Dear my good boy kiukiu,\n\nHere is my Little Air Book entry:\nWhy: ${whyText}\nAnger level: ${angerValue}/100\n\nBest Regards,\nAlly Chau\nsanayuk’s mommy\n\nSent at: ${timestamp}`;
+            const emailBody = `Dear my good boy kiukiu,\n\nHere is my Little Air Book entry:\nWhy: ${whyText}\nHow should I improve: ${improveText}\nAnger level: ${angerValue}/100\n\nBest Regards,\nAlly Chau\nsanayuk’s mommy\n\nSent at: ${timestamp}`;
             
             // Sends with custom angry success text
             sendEmailBackground(emailSubject, emailBody, submitBtn, 'Sent with angry 😡');
