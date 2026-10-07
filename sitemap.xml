@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main Pages -->
+  <url>
+    <loc>https://sanayuk.com/</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://sanayuk.com/about.html</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://sanayuk.com/directory.html</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://sanayuk.com/recents.html</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://sanayuk.com/socials.html</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.70</priority>
+  </url>
+  
+  <!-- Playground Pages -->
+  <url>
+    <loc>https://sanayuk.com/countdown.html</loc>
+    <lastmod>2026-10-07</lastmod>
+    <priority>0.60</priority>
+  </url>
+</urlset>
