@@ -22,6 +22,18 @@
             line-height: 1.8;
             margin-bottom: 40px;
         }
+
+        .bio-text h2 {
+            margin-top: 40px;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            color: #333;
+        }
+        
+        /* Remove margin from the very first h2 to keep it aligned nicely */
+        .bio-text h2:first-child {
+            margin-top: 0;
+        }
     </style>
 </head>
 <body>
@@ -41,14 +53,20 @@
     <div class="container">
 
         <div class="bio-text">
+            <h2>About Me</h2>
             <p>
                 <strong>Name</strong> Elvis Lo Yu Kiu 盧譽翹<br>
                 <strong>Birthday</strong> 2009/02/16 (<span id="my-age"></span> years old)<br>
-                <strong>Location</strong> Hong Kong, China<br>
+                <strong>Location</strong> Hong Kong, China
+            </p>
+
+            <h2>Website Info</h2>
+            <p>
                 <strong>Website Created</strong> 2023/09/15 18:40 (UTC +8)<br>
-                <strong>Last Updated</strong> <span id="last-updated">Fetching...</span><br>
+                <strong>Last Updated</strong> <span id="last-updated">Fetching...</span>
             </p>
         </div>
+
     </div> 
 
     <footer class="site-footer">
