@@ -1,18 +1,12 @@
 export default {
   async fetch(request, env) {
-    // Enable CORS so your website can fetch from this worker
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
-      "Access-Control-Max-Age": "86400",
+      "Content-Type": "application/json"
     };
 
-    if (request.method === "OPTIONS") {
-      return new Response(null, { headers: corsHeaders });
-    }
-
     try {
-      // 1. Get a new Access Token using your Refresh Token and Secrets
+      // Step 1: Check Token
       const authHeader = btoa(`${env.CLIENT_ID}:${env.CLIENT_SECRET}`);
       const tokenResponse = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",
@@ -27,40 +21,33 @@ export default {
       });
       
       const tokenData = await tokenResponse.json();
-      const accessToken = tokenData.access_token;
+      
+      if (!tokenData.access_token) {
+        return new Response(JSON.stringify({ 
+          error: "Failed to get access token", 
+          spotify_response: tokenData 
+        }), { headers: corsHeaders });
+      }
 
-      // 2. Fetch what you are currently playing
+      // Step 2: Check Player
       const npResponse = await fetch("https://api.spotify.com/v1/me/player/currently-playing", {
-        headers: { Authorization: `Bearer ${accessToken}` },
+        headers: { Authorization: `Bearer ${tokenData.access_token}` },
       });
 
-      // If nothing is playing, Spotify returns a 204 status
-      if (npResponse.status === 204 || npResponse.status > 400) {
-        return new Response(JSON.stringify({ isPlaying: false }), {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
+      if (npResponse.status === 204) {
+        return new Response(JSON.stringify({ 
+          error: "Spotify API returned 204: It thinks nothing is playing right now." 
+        }), { headers: corsHeaders });
       }
 
       const npData = await npResponse.json();
-      
-      // 3. Format the response for your HTML file
-      if (npData.is_playing && npData.item) {
-        return new Response(JSON.stringify({
-          isPlaying: true,
-          title: npData.item.name,
-          artist: npData.item.artists.map(a => a.name).join(", ")
-        }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
-      }
-
-      return new Response(JSON.stringify({ isPlaying: false }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return new Response(JSON.stringify({ 
+        success: "Connection working!", 
+        raw_data: npData 
+      }), { headers: corsHeaders });
 
     } catch (error) {
-      return new Response(JSON.stringify({ error: "Internal Server Error", isPlaying: false }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return new Response(JSON.stringify({ error: error.message }), { headers: corsHeaders });
     }
   }
 };
