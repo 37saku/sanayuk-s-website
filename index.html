@@ -32,6 +32,8 @@
 
     <div class="container">
         <h1>sanayuk /sanajuːk/</h1>
+        <!-- Updated Now Playing Element -->
+        <p id="now-playing" style="font-style: italic; margin-top: 8px; color: #666;">Loading...</p>
     </div> 
 
     <footer class="site-footer">
@@ -59,5 +61,28 @@
         </div>
     </footer>
 
+    <!-- Updated Spotify Fetch Script -->
+    <script>
+        async function fetchNowPlaying() {
+            try {
+                const response = await fetch('https://sanayuk-com.elvisloyukiu.workers.dev');
+                const data = await response.json();
+                const nowPlayingElement = document.getElementById('now-playing');
+
+                if (data.isPlaying) {
+                    nowPlayingElement.textContent = `Currently listening to ${data.title} by ${data.artist}`;
+                } else {
+                    nowPlayingElement.textContent = 'Not Playing';
+                }
+            } catch (error) {
+                console.error('Failed to fetch Spotify status:', error);
+                document.getElementById('now-playing').textContent = 'Not Playing';
+            }
+        }
+
+        // Run immediately on load, then check every 30 seconds
+        fetchNowPlaying();
+        setInterval(fetchNowPlaying, 30000);
+    </script>
 </body>
 </html>
