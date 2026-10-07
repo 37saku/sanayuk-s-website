@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V9VGRG6R9B"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-V9VGRG6R9B');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments | sanayuk</title>
+    <link rel="icon" type="image/jpeg" href="snypfp.jpg">
+    <link rel="stylesheet" href="style.css?v=8">
+    <style>
+        .comment-box {
+            background: var(--link-bg);
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 1px 1px 0px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .form-input, .form-textarea {
+            font-family: inherit;
+            font-size: 1rem;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fafafa;
+            color: #333;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 85px;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #888;
+            background: #fff;
+        }
+
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .submit-btn {
+            font-family: inherit;
+            font-size: 1rem;
+            padding: 10px 22px;
+            background: #333;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background: #555;
+            border-color: #555;
+        }
+
+        .submit-btn:disabled {
+            background: #aaa;
+            border-color: #aaa;
+            cursor: not-allowed;
+        }
+
+        .notice {
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        #status-message {
+            margin-top: 12px;
+            font-size: 0.95rem;
+            display: none;
+            line-height: 1.4;
+        }
+
+        /* Comments List */
+        .comments-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .comment-card {
+            background: var(--link-bg);
+            border: 1px solid #ccc;
+            padding: 18px 20px;
+            border-radius: 4px;
+            box-shadow: 1px 1px 0px rgba(0,0,0,0.05);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 6px;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            font-size: 1.05rem;
+            color: var(--text-color);
+        }
+
+        .comment-time {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .comment-body {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #444;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <a href="index.html" class="header-left">
+            <img src="snypfp.jpg" alt="Profile Picture" class="header-pfp">
+            <span class="header-name">sanayuk</span>
+        </a>
+        
+        <div class="header-right" style="display: flex; gap: 15px;">
+            <a href="about.html" class="header-link">About</a>
+            <a href="directory.html" class="header-link">More</a>
+        </div>
+    </header>
+
+    <div class="container" style="max-width: 650px; margin-top: 0;">
+        
+        <h1 style="margin-bottom: 25px;">Comments</h1>
+
+        <!-- Form for submitting without login -->
+        <div class="comment-box">
+            <form class="comment-form" id="comment-form">
+                <input type="text" id="name-input" class="form-input" placeholder="Your name or nickname" required maxlength="50">
+                <textarea id="message-input" class="form-textarea" placeholder="Leave a comment..." required rows="3" maxlength="1200"></textarea>
+                
+                <div class="form-footer">
+                    <button type="submit" class="submit-btn" id="post-btn">Post Comment</button>
+                    <span class="notice">Comments appear once approved.</span>
+                </div>
+
+                <div id="status-message"></div>
+            </form>
+        </div>
+
+        <!-- Approved Comments Display -->
+        <div class="comments-feed" id="comments-container">
+            <div style="color: #888; text-align: center;">Loading comments...</div>
+        </div>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <h4 class="footer-heading">Contact Me</h4>
+                <a href="mailto:sanayuuuk@gmail.com?subject=Contact from Website" class="footer-link">
+                    sanayuuuk@gmail.com
+                </a>
+            </div>
+
+            <div class="footer-right">
+                <h4 class="footer-heading">Socials</h4>
+                <div class="footer-socials">
+                    <a href="https://www.youtube.com/@sanayuk____" target="_blank">YouTube</a> —
+                    <a href="https://www.instagram.com/sanayuk____/" target="_blank">Instagram</a> —
+                    <a href="https://www.threads.net/@sanayuk____/" target="_blank">Threads</a> —
+                    <a href="https://open.spotify.com/user/31xqgkz4tjc3syadxhh52vzdo4kq?si=254b2dc9a4f743eb&nd=1&dlsi=bdf17cccaf9b42ae" target="_blank">Spotify</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© 2026 | sanayuk</span>
+        </div>
+    </footer>
+
+        <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby9N9Om_RwjiApCMWPftdHRfFoJC2Z-ToyC36JN7jcT8hEctHuu2IKiF8AIZLFqyO3lTg/exec";
+
+        // Formats any raw timestamp / ISO string to: YYYY/MM/DD HH:mm in local time
+        function formatDisplayTime(rawTime) {
+            if (!rawTime) return '';
+            
+            const d = new Date(rawTime);
+            // If valid date, convert to local time
+            if (!isNaN(d.getTime())) {
+                const y = d.getFullYear();
+                const m = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                const hh = String(d.getHours()).padStart(2, '0');
+                const mm = String(d.getMinutes()).padStart(2, '0');
+                return `${y}/${m}/${day} ${hh}:${mm}`;
+            }
+
+            // Fallback if it's already a custom string: strip seconds if present
+            return String(rawTime).replace(/:(\d{2})$/, '');
+        }
+
+        // Current local time formatted as YYYY/MM/DD HH:mm for new submissions
+        function getLocalTimeString() {
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const hh = String(now.getHours()).padStart(2, '0');
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            return `${y}/${m}/${d} ${hh}:${mm}`;
+        }
+
+        function escapeHtml(str) {
+            return String(str || '').replace(/[&<>"']/g, s => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[s]));
+        }
+
+        // Fetch and display approved comments
+        async function loadComments() {
+            const container = document.getElementById("comments-container");
+
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const comments = await res.json();
+
+                if (!comments || comments.length === 0) {
+                    container.innerHTML = "<div style='color: #888; text-align: center; padding: 20px 0;'>No comments yet. Be the first to leave one!</div>";
+                    return;
+                }
+
+                container.innerHTML = "";
+                comments.forEach(c => {
+                    const card = document.createElement("div");
+                    card.className = "comment-card";
+                    card.innerHTML = `
+                        <div class="comment-header">
+                            <span class="comment-author">${escapeHtml(c.name)}</span>
+                            <span class="comment-time">${escapeHtml(formatDisplayTime(c.time))}</span>
+                        </div>
+                        <div class="comment-body">${escapeHtml(c.message)}</div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                container.innerHTML = "<div style='color: #888; text-align: center; padding: 20px 0;'>Unable to load comments right now.</div>";
+            }
+        }
+
+        // Handle comment submission
+        const form = document.getElementById("comment-form");
+        const statusMsg = document.getElementById("status-message");
+        const postBtn = document.getElementById("post-btn");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const name = document.getElementById("name-input").value.trim();
+            const message = document.getElementById("message-input").value.trim();
+            const localTime = getLocalTimeString();
+
+            postBtn.disabled = true;
+            postBtn.textContent = "Posting...";
+            statusMsg.style.display = "block";
+            statusMsg.style.color = "#555";
+            statusMsg.textContent = "Sending your comment...";
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ name, message, localTime })
+                });
+
+                statusMsg.style.color = "#2e7d32";
+                statusMsg.textContent = "Thank you! Your comment has been submitted and will appear once approved.";
+                form.reset();
+            } catch (err) {
+                statusMsg.style.color = "#c62828";
+                statusMsg.textContent = "Error sending comment. Please try again.";
+            } finally {
+                postBtn.disabled = false;
+                postBtn.textContent = "Post Comment";
+            }
+        });
+
+        loadComments();
+    </script>
+
+</body>
+</html>
