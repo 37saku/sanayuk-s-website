@@ -40,6 +40,7 @@
             font-weight: bold;
             margin-bottom: 25px; 
             letter-spacing: 1px;
+            text-align: center;
         }
 
         .envelope {
@@ -534,6 +535,9 @@
             </div>
         </div>
 
+        <!-- DYNAMIC GREETING ABOVE THE MAIN CONTENT BOX -->
+        <div class="recipient-text" id="content-greeting" style="margin-bottom: 15px;"></div>
+
         <!-- The Static Main Letter Box -->
         <div class="letter-box">
             <div class="letter-text">
@@ -621,6 +625,29 @@
            LIVE FORMSPREE ENDPOINT:
            ======================================================== */
         const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xkjoonry';
+
+        /* --- DYNAMIC TIME-BASED GREETING --- */
+        function setTimeGreeting() {
+            const currentHour = new Date().getHours();
+            let timeText = "Goodnight";
+            
+            if (currentHour < 12) {
+                timeText = "Good Morning";
+            } else if (currentHour < 18) {
+                timeText = "Good Afternoon";
+            } else if (currentHour < 22) {
+                timeText = "Good Evening";
+            }
+            
+            const fullGreeting = `${timeText} Ally Chau, I love you!`;
+            
+            const contentGreeting = document.getElementById('content-greeting');
+            
+            if (contentGreeting) contentGreeting.innerText = fullGreeting;
+        }
+
+        // Run the greeting check immediately
+        setTimeGreeting();
 
         /* --- DOM ELEMENTS --- */
         const envelope = document.getElementById('envelope');
