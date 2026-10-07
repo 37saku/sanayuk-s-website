@@ -5,23 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recents | sanayuk</title>
     <link rel="icon" type="image/jpeg" href="snypfp.jpg">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=8">
+    <style>
+        /* Forces any future links inside your posts to stay black */
+        .post-content a, 
+        .post-content a:link, 
+        .post-content a:visited, 
+        .post-content a:active {
+            color: #000000 !important;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .post-content a:hover {
+            opacity: 0.7;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <a href="index.html">
-            <img src="snypfp.jpg" alt="Profile Picture" class="profile-pic">
+    <header class="top-header">
+        <a href="index.html" class="header-left">
+            <img src="snypfp.jpg" alt="Profile Picture" class="header-pfp">
+            <span class="header-name">sanayuk</span>
         </a>
         
-            <h1>Recents</h1>
+        <div class="header-right" style="display: flex; gap: 15px;">
+            <a href="about.html" class="header-link">About</a>
+            <a href="directory.html" class="header-link">More</a>
+        </div>
+    </header>
 
-        <nav class="site-nav">
-            <a href="index.html">Home</a> | 
-            <a href="about.html">About</a> | 
-            <a href="recents.html">Recents</a> | 
-            <a href="socials.html">Socials</a>
-        </nav>
+    <div class="container">
+        
+        <h1 style="margin-bottom: 30px;">Recents</h1>
 
         <div class="feed">
             <article class="post-card">
@@ -33,16 +49,34 @@
                     <p>Welcome to the new and redesigned version of sanayuk.com lol, I will post my updates here.</p>
                 </div>
             </article>
-            </div>
-
-            <div style="margin-top: 40px;">
-            <a href="index.html" class="contact-link">Back to Home</a>
         </div>
 
-        <footer>
-            <p>© 2026 sanayuk. All rights reserved.</p>
-        </footer>
     </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <h4 class="footer-heading">Contact Me</h4>
+                <a href="mailto:sanayuuuk@gmail.com?subject=Contact from Website" class="footer-link">
+                    sanayuuuk@gmail.com
+                </a>
+            </div>
+
+            <div class="footer-right">
+                <h4 class="footer-heading">Socials</h4>
+                <div class="footer-socials">
+                    <a href="https://www.youtube.com/@sanayuk____" target="_blank">YouTube</a> —
+                    <a href="https://www.instagram.com/sanayuk____/" target="_blank">Instagram</a> —
+                    <a href="https://www.threads.net/@sanayuk____/" target="_blank">Threads</a> —
+                    <a href="https://open.spotify.com/user/31xqgkz4tjc3syadxhh52vzdo4kq?si=254b2dc9a4f743eb&nd=1&dlsi=bdf17cccaf9b42ae" target="_blank">Spotify</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© 2026 | sanayuk</span>
+        </div>
+    </footer>
 
 </body>
 </html>
