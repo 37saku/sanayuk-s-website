@@ -211,7 +211,8 @@
     </footer>
 
         <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxj1z1Gjb0zPFcyoKdKjw94FOk7G34M1Dmo2T58N_hIJpVf1nJAxJHeLu2s7CaaQDQQoQ/exec";
+        // Updated with the new deployment URL
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxM1qhxAlmytv_nrBVTssjHzJ4xHUdzCgP74mxCls5X4hf6mg-JmKKhFDuv9mGsWDSKXw/exec";
 
         // Formats any raw timestamp / ISO string to: YYYY/MM/DD HH:mm in local time
         function formatDisplayTime(rawTime) {
@@ -258,7 +259,8 @@
             const container = document.getElementById("comments-container");
 
             try {
-                const res = await fetch(SCRIPT_URL);
+                // Added redirect: "follow"
+                const res = await fetch(SCRIPT_URL, { redirect: "follow" });
                 const comments = await res.json();
 
                 if (!comments || comments.length === 0) {
@@ -302,10 +304,12 @@
             statusMsg.textContent = "Sending your comment...";
 
             try {
+                // Added redirect: "follow"
                 await fetch(SCRIPT_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify({ name, message, localTime })
+                    body: JSON.stringify({ name, message, localTime }),
+                    redirect: "follow" 
                 });
 
                 statusMsg.style.color = "#2e7d32";
